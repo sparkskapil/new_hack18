@@ -14,7 +14,7 @@ def investor(request):
         
         if(Investor.objects.filter(Email=request.POST.get('Username'))):
                 context={
-                        'existmsg':'User already exists'
+                        'existmsg':'<b><i>User already exists</b></i>'
                 }
                 return render(request,'Homepage/investor_present.html',context)
         
