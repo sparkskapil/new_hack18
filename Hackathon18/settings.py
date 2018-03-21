@@ -86,7 +86,7 @@ DATABASES = {
         'NAME': 'hackathon18',
         'HOST':'localhost',
         'USER':'root',
-        'PASSWORD':'password',
+        'PASSWORD':'helloworld',
         'PORT':''
     }
 }
