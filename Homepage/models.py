@@ -14,14 +14,14 @@ class Investor(models.Model):
 	
 
 class IndividualAddOn(models.Model):
-    Username = ""
+    Username = models.ForeignKey('Investor')
     BusinessType=models.CharField(max_length=50)
     StartupsFunded=models.CharField(max_length=5)
     URL=models.CharField(max_length=50)
     
 
 class OrganizationAddOn(models.Model):
-    Username=""
+    Username=models.ForeignKey('Investor')
     OrganizationType=models.CharField(max_length=50)
     URL=models.CharField(max_length=50)
     YearFounded=models.CharField(max_length=4)
