@@ -9,7 +9,7 @@ def home(request):
    return render(request,'Homepage/index.html',)
 
 def investor(request):
-    if(request.method == "POST"):
+    if(request.method == "POST" and request.POST.get('Submit') == "Signup"):
         investor = Investor()
         if(Investor.objects.filter(Email=request.POST.get('Email'))):
                 context={
@@ -23,8 +23,7 @@ def investor(request):
         investor.Username = request.POST.get('Username')
         investor.Password = request.POST.get('Password')
         investor.save()
-        
-        a=request.POST.get('Username')
+        a=investor.Name
         context={
                 'greet':a
         }
