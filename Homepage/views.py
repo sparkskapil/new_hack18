@@ -9,21 +9,21 @@ def home(request):
    return render(request,'Homepage/index.html',)
 
 def investor(request):
-    if(request.method == "POST"):
+    if(request.method == "POST" and request.POST.get('Submit') == "Signup"):
         investor = Investor()
-        
-        if(Investor.objects.filter(Email=request.POST.get('Username'))):
+        if(Investor.objects.filter(Email=request.POST.get('Email'))):
                 context={
-                        'existmsg':'<b><i>User already exists</b></i>'
+                        'existmsg':'User already exists'
                 }
                 return render(request,'Homepage/investor_present.html',context)
-        
-        investor.Email = request.POST.get('Username')
-        investor.Name = request.POST.get('Name')
+        investor.Name = request.POST.get('Name')  
+        investor.Contact = request.POST.get('Contact')    
+        investor.Email = request.POST.get('Email')
+        investor.City = request.POST.get('City')
+        investor.Username = request.POST.get('Username')
         investor.Password = request.POST.get('Password')
         investor.save()
-        
-        a=request.POST.get('Username')
+        a=investor.Name
         context={
                 'greet':a
         }

@@ -10,9 +10,7 @@
 <link href="{% static "layout/styles/layout.css" %}" rel="stylesheet" type="text/css" media="all">
 
 <style type="text/css">
-  html{
-    overflow: hidden;
-  }
+
     body{
       width: 100vw;
       height: 100vh;
@@ -22,7 +20,7 @@
     .myfields{
       padding: 10px;
       border: none;
-      border-radius: 10px;
+      border-radius: 2px;
       cursor: pointer;
       width:50%;
       margin:10px; 
@@ -55,7 +53,7 @@
           <input class="myfields" type="text" name="City" placeholder="City" required>
           <input class="myfields" type="text" name="Username" placeholder="Username" required>
           <input class="myfields" type="password" name="Password" placeholder="Password" required>
-          <input type="submit" value="Signup" class="btn">
+          <input type="submit" name="Submit" value="Signup" class="btn">
        </form>
        <div class="container">
                  {% block content %}   
