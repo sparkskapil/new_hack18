@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render,redirect
 
+from .models import Investor,IndividualAddOn, OrganizationAddOn
+
 # Create your views here.
 
 def home(request):
