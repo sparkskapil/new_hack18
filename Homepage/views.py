@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render,redirect
-from .models import Investor
+from .models import Investor, OrganizationAddOn
 # Create your views here.
 
 def home(request):
@@ -53,7 +53,22 @@ def Login(request):
 
 
 def Organization(request):
-        pass
+        org= OrganizationAddOn() 
+        id=request.session['id']
+
+        org.Username=id
+        org.OrganizationType=request.POST.get('')
+        org.URL=request.POST.get('Website')
+        org.YearFounded=request.POST.get('Year founded')
+        org.Size=request.POST.get('size')
+        org.BussinessType=request.POST.get('Company Type')
+        org.Specialties=request.POST.get('Specialties')
+        org.save()
+        return render(request,'Homepage/investorDetails.html')
+ 
+
+
+
 
 def Individual(request):
         pass
