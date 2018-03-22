@@ -33,7 +33,7 @@ def investor(request):
 
 
     
-def Signup(request):
+def Inv_Signup(request):
         investor = Investor()
         #UNIQUE EMAIL CHECK
         if(Investor.objects.filter(Email=request.POST.get('Email'))):
@@ -74,7 +74,7 @@ def Signup(request):
         return render(request,'Homepage/investorDetails.html',context)
 
 
-def Login(request):
+def Inv_Login(request):
         username = request.POST.get('Username')
         password = request.POST.get('Password')
         
@@ -95,7 +95,7 @@ def Login(request):
                 
 
 
-def Organization(request):
+def Inv_Organization(request):
         org= OrganizationAddOn() 
         id=request.session['id']
 
@@ -113,16 +113,27 @@ def Organization(request):
 
 
 
-def Individual(request):
+def Inv_Individual(request):
         id = request.session['id']
         ind = IndividualAddOn()
         ind.Username = id
         ind.BusinessType = request.POST.get('BusinessType')
         ind.StartupsFunded = request.POST.get('StartupsFunded')
         ind.URL = request.POST.get('URL')
-     
+        ind.save()
 
-def SetSession(request):
+
+def Inv_SetSession(request):
         request.session['id'] = investor.id
         request.session['Name'] = investor.Name 
         redirect("/Investor/")
+
+
+
+
+
+##########################################################################
+        #STARTUPS
+##########################################################################
+
+
