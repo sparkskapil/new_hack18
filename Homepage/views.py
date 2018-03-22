@@ -10,6 +10,24 @@ def home(request):
 
 def investor(request):
     if(request.method == "POST" and request.POST.get('Submit') == "Signup"):
+        Signup(request)
+        #login's code
+    elif(request.method=="POST" and request.POST.get('Submit')=="Login"):
+        Login(request)
+        
+        #ORhanization's code
+    elif(request.method=="POST" and request.POST.get('Submit')==""):
+        Login(request)   
+
+    elif(request.method=="POST" and request.POST.get('Submit')=="Login"):
+        Login(request)    
+
+    else:   
+        return render(request,'Homepage/Investor.html',)
+
+
+    
+def Signup(request):
         investor = Investor()
         if(Investor.objects.filter(Email=request.POST.get('Email'))):
                 context={
@@ -28,8 +46,16 @@ def investor(request):
                 'greet':a
         }
         return render(request,'Homepage/investorDetails.html',context)
-    else:   
-        return render(request,'Homepage/Investor.html',)
 
 
-    
+def Login(request):
+        pass
+
+
+def Organization(request):
+        pass
+
+def Individual(request):
+        pass
+
+
