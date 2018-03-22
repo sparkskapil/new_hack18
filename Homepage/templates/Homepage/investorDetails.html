@@ -45,7 +45,7 @@
     <!-- ################################################################################################ -->
     <article>
    
-      <h3 class="heading">Welcome, {{greet}}</h3>
+      <h3 class="heading">Welcome, {{request.session.name}}</h3>
       <footer>
        <center><form method = "POST">
           {% csrf_token %}
