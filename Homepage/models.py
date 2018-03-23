@@ -44,24 +44,9 @@ class Startup(models.Model):
     City = models.CharField(max_length=20,default="Pune")
     Password = models.CharField(max_length=100)
 
-#   AddOn FINAL PORTFOLIO   #models.CharField(max_length=100)
+#   AddOn FINAL PORTFOLIO   #
 #############################
-class StartupAddOn(models.Model):
-    Status = models.CharField(max_length=5)
-    Tagline = models.CharField(max_length=100)
-    Website = models.CharField(max_length=100)
-    BusinessSector = models.CharField(max_length=100)
-    Problem = models.ForeignKey('ProblemSolution')
-    UVP = models.CharField(max_length=200)
-    Competitors = models.CharField(max_length=1000)
-    CompetitiveAdvantage = models.CharField(max_length=200)
-    TargetCustomers = models.CharField(max_length=200)
-    #LOGO
-    # MarketValidation
-    # Team 
-    
-
-class ProblemSolution:
+class ProblemSolution(models.Model):
     What = models.CharField(max_length=200)
     Need = models.CharField(max_length=200)
     ExistSolution = models.CharField(max_length=200)
@@ -69,4 +54,23 @@ class ProblemSolution:
     How = models.CharField(max_length=200)
     Satisfies = models.CharField(max_length=200)
     Better = models.CharField(max_length=200)
+
+
+class StartupAddOn(models.Model):
+    Status = models.CharField(max_length=50)
+    Stage = models.CharField(max_length=100)
+    Tagline = models.CharField(max_length=100)
+    Website = models.CharField(max_length=100)
+    BusinessSector = models.CharField(max_length=100)
+    Problem = models.ForeignKey('ProblemSolution')
+    UVP = models.CharField(max_length=200)
+    CompetitiveAdvantage = models.CharField(max_length=200)
+    TargetCustomers = models.CharField(max_length=200)
+    Threats = models.CharField(max_length=200)
+    Summary = models.CharField(max_length=1000)
+    #LOGO
+    # MarketValidation
+    # Team 
+    #Competitors = models.CharField(max_length=1000)
+    
 
