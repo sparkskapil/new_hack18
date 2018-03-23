@@ -84,3 +84,10 @@ class PortFolio(models.Model):
     StrRequest = models.CharField(max_length=100, default="PENDING")
     InvPortfolio = models.BooleanField(default=False)
     StrPortfolio = models.BooleanField(default=False)
+
+class Filters(models.Model):
+    InvestorId = models.ForeignKey('Investor')
+    FilterName = models.CharField(max_length=100, default="")
+    Loction = models.CharField(max_length=100, default="")
+    BSector = models.CharField(max_length=100, default="")
+    StartupStage = models.CharField(max_length=100, default="")
