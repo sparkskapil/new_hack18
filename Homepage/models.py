@@ -44,8 +44,7 @@ class Startup(models.Model):
     City = models.CharField(max_length=20,default="Pune")
     Password = models.CharField(max_length=100)
 
-#   AddOn FINAL PORTFOLIO   #
-#############################
+
 class ProblemSolution(models.Model):
     What = models.CharField(max_length=200)
     Need = models.CharField(max_length=200)
@@ -55,7 +54,8 @@ class ProblemSolution(models.Model):
     Satisfies = models.CharField(max_length=200)
     Better = models.CharField(max_length=200)
 
-
+#   AddOn FINAL PORTFOLIO   #
+#############################
 class StartupAddOn(models.Model):
     Status = models.CharField(max_length=50)
     Stage = models.CharField(max_length=100)
@@ -73,4 +73,6 @@ class StartupAddOn(models.Model):
     # Team 
     #Competitors = models.CharField(max_length=1000)
     
-
+class FeasibilityScore(models.Model):
+    StartupId = models.ForeignKey('Startup')
+    Score = models.PositiveSmallIntegerField(default=1, blank=True, null=True)
