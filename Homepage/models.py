@@ -76,3 +76,11 @@ class StartupAddOn(models.Model):
 class FeasibilityScore(models.Model):
     StartupId = models.ForeignKey('Startup')
     Score = models.PositiveSmallIntegerField(default=1, blank=True, null=True)
+
+class PortFolio(models.Model):
+    InvestorId = models.ForeignKey('Investor')
+    StartupId  = models.ForeignKey('Startup')
+    InvRequest = models.CharField(max_length=100, default="PENDING")
+    StrRequest = models.CharField(max_length=100, default="PENDING")
+    InvPortfolio = models.BooleanField(default=False)
+    StrPortfolio = models.BooleanField(default=False)
