@@ -136,4 +136,5 @@ def Inv_SetSession(request):
         #STARTUPS
 ##########################################################################
 
-
+def startup(request):
+        pass
