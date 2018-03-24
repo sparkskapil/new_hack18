@@ -18,6 +18,7 @@ class IndividualAddOn(models.Model):
     BusinessType=models.CharField(max_length=50)
     StartupsFunded=models.CharField(max_length=5)
     URL=models.CharField(max_length=50)
+    Pic=models.ImageField(upload_to="profile",blank=True)
     
 
 class OrganizationAddOn(models.Model):
