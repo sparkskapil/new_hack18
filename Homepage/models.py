@@ -15,9 +15,10 @@ class Investor(models.Model):
 
 class IndividualAddOn(models.Model):
     Username = models.ForeignKey('Investor')
-    BusinessType=models.CharField(max_length=50)
-    StartupsFunded=models.CharField(max_length=5)
-    URL=models.CharField(max_length=50)
+    BusinessType=models.CharField(max_length=50,blank=True)
+    StartupsFunded=models.CharField(max_length=5,blank=True)
+    URL=models.CharField(max_length=50,blank=True)
+    Pic=models.ImageField(upload_to="profile",blank=True)
     
 
 class OrganizationAddOn(models.Model):

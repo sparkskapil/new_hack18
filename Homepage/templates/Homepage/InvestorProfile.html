@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html lang="">
+<!-- To declare your language - read more here: https://www.w3.org/International/questions/qa-html-language-declarations -->
+<head>
+<title>INVESTOR</title>
+<meta charset="utf-8">
+{% load static %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link href="{% static "layout/styles/layout.css" %}" rel="stylesheet" type="text/css" media="all">
+
+<style type="text/css">
+  html{
+    overflow: hidden;
+  }
+    body{
+      width: 100vw;
+      height: 100vh;
+      margin: 0px 0px;
+      padding: 0px 0px;
+    }
+    .myfields{
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      width:50%;
+      margin:10px; 
+      color:#333;
+      background: #f2f2f2;
+    }
+    .btn{
+      cursor: pointer;
+    }
+
+</style>
+
+
+
+</head>
+<body id="top">
+
+<div class="wrapper bgded overlay" style="background-image:url({% static 'images/demo/backgrounds/writing-image.jpg' %});">
+  <div id="pageintro" class="hoc clear"> 
+    <!-- ################################################################################################ -->
+    <article>
+   
+      <h3 class="heading">Welcome, {{request.session.Name}}</h3>
+      <footer>
+       {%if request.session.Pic is defined%} 
+        <center><form method = "POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input class="myfields" type="file" name="Pic">
+            <input type="submit" name="Submit" value="Upload" class="btn">
+        </form>
+       {%else%}
+          <div class="container">
+                <img style="width:200px; height:200px" src="/Homepage{{request.session.Pic}}">
+          </div>
+       {%endif%}
+    </center>
+      </footer>
+    </article>
+    <!-- ################################################################################################ -->
+  </div>
+</div>
+
+<!-- JAVASCRIPTS -->
+<script src="{% static "layout/scripts/jquery.min.js" %}"></script>
+<script src="{% static "layout/scripts/jquery.backtotop.js" %}"></script>
+<script src="{% static "layout/scripts/jquery.mobilemenu.js" %}"></script>
+</body>
+</html>

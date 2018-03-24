@@ -27,6 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["10.42.0.237","localhost","127.0.0.1"]
 
+
+#FILES
+MEDIA_ROOT = os.path.join(BASE_DIR,'Homepage/media')
+MEDIA_URL = 'Homepage/media/'
 #Sessions
 SESSION_ENGINES='django.contrib.sessions.backends.cache'
 
@@ -92,7 +96,7 @@ DATABASES = {
         'PORT':''
     }
 }
-
+ 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
@@ -135,3 +139,5 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, ""),
     '/Homepage/static',
 ]
+
+
