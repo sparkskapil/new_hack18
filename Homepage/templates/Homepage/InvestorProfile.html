@@ -45,17 +45,19 @@
     <!-- ################################################################################################ -->
     <article>
    
-      <h3 class="heading">Welcome, {{request.session.name}}</h3>
+      <h3 class="heading">Welcome, {{request.session.Name}}</h3>
       <footer>
-       <center><form method = "POST" enctype="multipart/form-data">
-          {% csrf_token %}
-          <input class="myfields" type="file" name="Pic">
-          <input type="submit" value="Register" class="btn">
-       </form>
-       <div class="container">
-                 {% block content %}   
-                 {% endblock %}
-       </div>
+       {%if request.session.Pic is defined%} 
+        <center><form method = "POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input class="myfields" type="file" name="Pic">
+            <input type="submit" name="Submit" value="Upload" class="btn">
+        </form>
+       {%else%}
+          <div class="container">
+                <img style="width:200px; height:200px" src="/Homepage{{request.session.Pic}}">
+          </div>
+       {%endif%}
     </center>
       </footer>
     </article>

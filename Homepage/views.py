@@ -10,23 +10,41 @@ from .models import Investor,IndividualAddOn, OrganizationAddOn
 def home(request):
    return render(request,'Homepage/index.html',)
 
-def investor(request):
+def investor(request):  
     #If session exists render Investors Homepage    
-    if("id" in request.session):
-        render(request,'Homepage/investorDetails.html',context)   #Issue must be Investor Home not detail form  
-
-    if(request.method == "POST" and request.POST.get('Submit') == "Signup"):
-        Signup(request)
-        #login's code
-    elif(request.method=="POST" and request.POST.get('Submit')=="Login"):
-        Login(request)
+    if(request.method == "POST" and request.POST.get('Submit') == "Upload"):
+        #Handle File Upload
+        ID = Investor.objects.get(id = int(request.session['id']))
         
-        #ORhanization's code
+        if IndividualAddOn.objects.filter(id = request.session['id']):
+                ind = IndividualAddOn.objects.get(Username = ID)
+        else:        
+                ind = IndividualAddOn()
+                ind.Username = ID
+        
+        ind.Pic = request.FILES['Pic'] 
+        ind.save() 
+        
+        request.session['Pic'] = ind.Pic.url
+        
+        return redirect("/Investor/") 
+      
+    #login's code
+    if("id" in request.session):
+        return render(request,'Homepage/InvestorProfile.html')   #!!SOLVED!! Issue must be Investor Home not detail form  
+        
+    if(request.method == "POST" and request.POST.get('Submit') == "Signup"):
+        return Inv_Signup(request)
+
+    elif(request.method=="POST" and request.POST.get('Submit')=="Login"):
+        return Inv_Login(request)
+        
+        #Organization's code
     elif(request.method=="POST" and "Organization" in request.POST):
-        Organization(request)   
+        return Inv_Organization(request)   
 
     elif(request.method=="POST" and "Individual" in request.POST):
-        Individual(request)    
+        return Inv_Individual(request)    
 
     else:   
         return render(request,'Homepage/Investor.html',)
@@ -54,8 +72,7 @@ def Inv_Signup(request):
                 context={
                         'existmsg':'Username already exists'
                 }
-                return render(request,'Homepage/investor_present.html',context) #Issue must be Investor Home not detail form 
-
+                return render(request,'Homepage/investor_present.html',context) 
         investor.Name = request.POST.get('Name')  
         investor.Contact = request.POST.get('Contact')    
         investor.Email = request.POST.get('Email')
@@ -66,12 +83,9 @@ def Inv_Signup(request):
 
         request.session['id'] = investor.id
         request.session['Name'] = investor.Name
-        
-        a=investor.Name
-        context={
-                'greet':a
-        }
-        return render(request,'Homepage/investorDetails.html',context)
+              
+        return render(request,'Homepage/InvestorProfile.html')#!!SOLVED!! Issue must be Investor Home not detail form 
+
 
 
 def Inv_Login(request):
