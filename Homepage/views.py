@@ -8,7 +8,7 @@ from .models import Investor,IndividualAddOn, OrganizationAddOn
 # Create your views here.
 
 def home(request):
-   return render(request,'Homepage/index.html',)
+   return render(request,'Homepage/index.html',)        #PENDING
 
 def investor(request):  
     #If session exists render Investors Homepage    
@@ -30,13 +30,14 @@ def investor(request):
         return redirect("/Investor/") 
       
     #login's code
+ 
     if("id" in request.session):
         return render(request,'Homepage/InvestorProfile.html')   #!!SOLVED!! Issue must be Investor Home not detail form  
         
-    if(request.method == "POST" and request.POST.get('Submit') == "Signup"):
+    if(request.method == "POST" and request.POST.get('Submit') == "Sign Up"):
         return Inv_Signup(request)
 
-    elif(request.method=="POST" and request.POST.get('Submit')=="Login"):
+    elif(request.method=="POST" and request.POST.get('Submit')=="Log In"):
         return Inv_Login(request)
         
         #Organization's code
@@ -47,7 +48,7 @@ def investor(request):
         return Inv_Individual(request)    
 
     else:   
-        return render(request,'Homepage/Investor.html',)
+        return render(request,'Homepage/investors_login_signup.html',)
 
 
     
@@ -58,21 +59,21 @@ def Inv_Signup(request):
                 context={
                         'existmsg':'Email already exists'
                 }
-                return render(request,'Homepage/investor_present.html',context)
+                return render(request,'Homepage/investors_login_signup.html',context)
         
         #UNIQUE MOBILE NUMBER CHECK        
         if(Investor.objects.filter(Contact=request.POST.get('Contact'))):
                 context={
                         'existmsg':'Contact already exists'
                 }
-                return render(request,'Homepage/investor_present.html',context)
+                return render(request,'Homepage/investors_login_signup.html',context)
 
         #UNIQUE USERNAME CHECK               
         if(Investor.objects.filter(Username=request.POST.get('Username'))):
                 context={
                         'existmsg':'Username already exists'
                 }
-                return render(request,'Homepage/investor_present.html',context) 
+                return render(request,'Homepage/investors_login_signup.html',context) 
         investor.Name = request.POST.get('Name')  
         investor.Contact = request.POST.get('Contact')    
         investor.Email = request.POST.get('Email')
@@ -89,24 +90,33 @@ def Inv_Signup(request):
 
 
 def Inv_Login(request):
+        print "In login"
         username = request.POST.get('Username')
         password = request.POST.get('Password')
         
         #Logic For Login
         #if((Username == "Email" || Username == "Contact" || Username == "Email" )&& Password == "Password")
-        
-        if("@" in Username and "." in Username):
+        login=False
+        if("@" in username and "." in username):
                 if(Investor.objects.filter(Email=username,Password=password)):
                         SetSession(request)   
+                        login=True
 
-        if(Username.isDigit()):
+        if(str(username).isdigit()):
                 if(Investor.objects.filter(Contact=username,Password=password)):
-                        SetSession(request)  
+                        SetSession(request)
+                        login=True  
                          
         else:
                 if(Investor.objects.filter(Username=username,Password=password)):
-                        SetSession(request)   
-                
+                        SetSession(request)
+                        login=True   
+
+        if login == False:
+                context={
+                        'existmsg':'Credentials Incorrect or Not Registered'
+                }
+                return render(request,'Homepage/investors_login_signup.html',context)     
 
 
 def Inv_Organization(request):
