@@ -161,4 +161,5 @@ def Inv_SetSession(request):
 ##########################################################################
 
 def startup(request):
-        pass
+        
+        return  render(request,'Homepage/startups_login_signup.html')
