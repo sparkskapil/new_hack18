@@ -53,6 +53,7 @@ class ProblemSolution(models.Model):
     How = models.CharField(max_length=200)
     AddressedNeeds = models.CharField(max_length=200)
     Better = models.CharField(max_length=200)
+    startup =  models.ForeignKey('Startup')
 
 #   AddOn FINAL PORTFOLIO   #
 #############################
@@ -62,7 +63,6 @@ class StartupAddOn(models.Model):
     Tagline = models.CharField(max_length=100)
     Website = models.CharField(max_length=100)
     BusinessSector = models.CharField(max_length=100)
-    Problem = models.ForeignKey('ProblemSolution')
     UVP = models.CharField(max_length=1000)
     CompetitiveAdvantage = models.CharField(max_length=1000)
     TargetCustomers = models.CharField(max_length=500)
