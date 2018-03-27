@@ -38,7 +38,7 @@ class OrganizationAddOn(models.Model):
 #   SIGNUP DETAILS  #
 #####################
 class Startup(models.Model):
-    Name = models.CharField(max_length=100)
+    Name = models.CharField(max_length=100)     #Startup Name
     Email = models.CharField(max_length=100)
     Username = models.CharField(max_length=100,default="")
     Contact = models.CharField(max_length=15,default="123456")
@@ -47,12 +47,11 @@ class Startup(models.Model):
 
 
 class ProblemSolution(models.Model):
-    What = models.CharField(max_length=200)
+    Problem = models.CharField(max_length=200)
     Need = models.CharField(max_length=200)
-    ExistSolution = models.CharField(max_length=200)
-
+    ExistingSolution = models.CharField(max_length=200)
     How = models.CharField(max_length=200)
-    Satisfies = models.CharField(max_length=200)
+    AddressedNeeds = models.CharField(max_length=200)
     Better = models.CharField(max_length=200)
 
 #   AddOn FINAL PORTFOLIO   #
@@ -64,19 +63,45 @@ class StartupAddOn(models.Model):
     Website = models.CharField(max_length=100)
     BusinessSector = models.CharField(max_length=100)
     Problem = models.ForeignKey('ProblemSolution')
-    UVP = models.CharField(max_length=200)
-    CompetitiveAdvantage = models.CharField(max_length=200)
-    TargetCustomers = models.CharField(max_length=200)
+    UVP = models.CharField(max_length=1000)
+    CompetitiveAdvantage = models.CharField(max_length=1000)
+    TargetCustomers = models.CharField(max_length=500)
     Threats = models.CharField(max_length=200)
     Summary = models.CharField(max_length=1000)
-    #LOGO
+    LOGO =  Image = models.ImageField(upload_to="Team",blank = True)
     # MarketValidation
-    # Team 
-    #Competitors = models.CharField(max_length=1000)
-    
+
+
 class FeasibilityScore(models.Model):
     StartupId = models.ForeignKey('Startup')
     Score = models.PositiveSmallIntegerField(default=1, blank=True, null=True)
+
+class Product(models.Model):
+    Name = models.CharField(max_length=100)
+    ProductImage = models.ImageField(upload_to="Team",default="Team/default.jpg")
+    startup = models.ForeignKey('Startup')
+
+class Associate(models.Model):
+    Name = models.CharField(max_length=100)
+    Designation = models.CharField(max_length=100)
+    Responsibility = models.CharField(max_length=100)
+    Email = models.CharField(max_length=100)
+    Image = models.ImageField(upload_to="Team",default="Team/default.jpg")
+    startup = models.ForeignKey('Startup')
+
+class Competitor(models.Model):
+    Name = models.CharField(max_length=100)
+    Strength = models.CharField(max_length=1000)
+    Weakness = models.CharField(max_length=1000)
+    startup = models.ForeignKey('Startup')
+
+
+
+
+
+
+
+
 
 class PortFolio(models.Model):
     InvestorId = models.ForeignKey('Investor')
