@@ -30,7 +30,7 @@ ALLOWED_HOSTS = ["10.42.0.237","localhost","127.0.0.1"]
 
 #FILES
 MEDIA_ROOT = os.path.join(BASE_DIR,'Homepage/media')
-MEDIA_URL = 'Homepage/media/'
+MEDIA_URL = '/media/'
 #Sessions
 SESSION_ENGINES='django.contrib.sessions.backends.cache'
 

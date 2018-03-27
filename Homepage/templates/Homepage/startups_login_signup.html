@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+{%load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Hi Startup</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static "vendor/bootstrap/css/bootstrap.min.css"%}" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="{% static "vendor/font-awesome/css/font-awesome.min.css"%}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+    <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="stylesheet" href="{% static "css/login_signup.css"%}">
+
+
+    <!-- Custom styles for this template -->
+    <link href="{% static "css/agency.min.css"%}" rel="stylesheet">
+
+    
+
+
+    <style>
+      .baseFont{
+        font-family: 'Arial';
+        font-size: 40px;
+        font-weight: lighter;
+      }
+
+      label{
+        font-family: 'Arial';
+        font-size: 18px;
+        font-weight: lighter;
+
+      } 
+
+    	.fieldsMargin{
+    		margin: 10px 0px 10px 0px;
+    	}
+
+    	input{
+        font-family: 'Arial';
+    		padding-top:10px;
+    		padding-bottom:10px; 
+        font-weight: lighter;
+        font-size: 18px;
+    	}
+
+      .myStyle{
+        font-family: 'Arial';
+        padding-top:5px;
+        padding-bottom:5px; 
+        font-weight: lighter;
+        font-size: 20px;
+        padding: 15px 5px 15px 5px;
+        cursor: pointer;
+        text-transform: inherit;
+        width: 100px;
+        
+      }
+      .myStyle:hover{
+        background: rgb(22,25,35);
+      }
+
+      .welcome{
+        font-family: 'Kaushan Script','Helvetica Neue',Helvetica,Arial;
+        font-weight: lighter;
+      }
+
+      .overlay{position:relative; z-index:1;}
+      .overlay::after{color:inherit; background-color:rgba(0,0,0,.55);}
+      .overlay::after{display:block; position:absolute; top:0; left:0; width:100%; height:100%; content:""; z-index:-1;}
+
+      .myicon{
+        background-color: rgb(23,155,119)!important; 
+      }
+      .myfooter{
+        background-color: rgb(22,22,22)!important; 
+      }
+
+      /*Scroll Bar Css*/
+      ::-webkit-scrollbar {
+              width: 12px;
+          }
+
+          /* Track */
+          ::-webkit-scrollbar-track {
+              box-shadow: inset 0 0 5px grey; 
+              border-radius: 10px;
+          }
+           
+          /* Handle */
+          ::-webkit-scrollbar-thumb {
+              background: rgb(23,155,119); 
+              border-radius: 10px;
+          }
+
+          /* Handle on hover */
+          ::-webkit-scrollbar-thumb:hover {
+              background: rgb(25,25,37); 
+          }
+
+
+      /******************************************/ 
+      
+      /****************DANGER BOX****************/
+      .alert {
+        margin-top: 20px;
+        padding: 10px 10px 10px 10px;
+        background-color: #f44336;
+        color: white;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 15px;
+    }
+    
+    .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    
+    .closebtn:hover {
+        color: black;
+    }
+    
+      /*******************************************/
+
+
+
+
+	</style>
+
+  </head>
+
+  <body id="page-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" style="margin-bottom:10px!important">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">Hackathon2K18</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav text-uppercase ml-auto">
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="/Homepage">Home</a>
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="masthead overlay" >
+      <div class="container" >
+        <div class="intro-text" >
+         
+        <!-- Page Content -->
+        <div class="container" id="form">
+          <!-- Page Heading -->
+          <h1 class="my-4 baseFont">Welcome Startups!<br>
+            <small>Make A Change Support Make in India</small>
+            <div class="form">
+                <ul class="tab-group">
+                  
+                  <li class="tab active"><a href="#login">Log In</a></li>
+                  <li class="tab"><a href="#signup">Sign Up</a></li>
+
+                </ul>
+
+                <div class="tab-content">
+
+                 <div id="login">
+                    <h3 class="welcome">Welcome Back !</h3>
+
+                    <form method="POST">
+                      {% csrf_token %}
+                      <div class="field-wrap">
+                      <label>
+                        Email or Contact or Username<span class="req">*</span>
+                      </label>
+                      <input name="Username" type="text"required autocomplete="off"/>
+                    </div>
+
+                    <div class="field-wrap">
+                      <label>
+                        Password<span class="req">*</span>
+                      </label>
+                      <input name="Password" type="password" required autocomplete="off"/>
+                    </div>
+                    
+                    <input type="hidden" name="Submit" value="Log In">
+                     <center> <button class="button button-block myStyle"/>Log In</button> </center>
+                   </form>
+                  </div>		
+
+
+                  <div id="signup">
+                    <form  method="POST">
+                      {% csrf_token %}
+                    <div class="field-wrap fieldsMargin">
+                      <input name="Name" placeholder="Your Name" type="text" required autocomplete="off"/>
+                    </div>
+
+                    <div class="field-wrap fieldsMargin">
+                      <input name="Contact" placeholder="Contact" type="text" minlenght="10" maxlenght="10" max ="9999999999" autocomplete="off"/>
+                    </div>
+
+                    <div class="field-wrap fieldsMargin">
+                      <input name="Email" placeholder="Email" type="email" required autocomplete="off"/>
+                    </div>
+                    
+                    <div class="field-wrap fieldsMargin">
+                      <input name="City"  placeholder="City" type="text" required autocomplete="off"/>
+                    </div>
+                    
+                    <div class="field-wrap fieldsMargin">                   
+                      <input name="Username" type="text" placeholder="Username" required autocomplete="off"/>
+                    </div>
+
+                    <div class="field-wrap fieldsMargin">
+                      <input name="Password" type="password" placeholder="Password" required autocomplete="off"/>
+                    </div>
+                    <input type="hidden" name="Submit" value="Sign Up">
+					<center><button type="submit" class="button button-block  myStyle"/>Sign Up</button>
+				</form></center>
+
+                </div>
+                
+                </div><!-- tab-content -->
+
+     {%if existmsg %}
+          <div class="alert" id="Error">
+              <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+              <strong>Problem: </strong> {{existmsg}}
+          </div>
+
+      {%endif%}    
+       </div> <!-- /form -->
+
+        
+    </header>
+
+
+    <!-- Footer -->
+    <footer class="myfooter">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <span class="copyright" style="color: #f2f2f2">Copyright &copy; Your Website 2018</span>
+          </div>
+          <div class="col-md-4">
+            <ul class="list-inline social-buttons">
+              <li class="list-inline-item">
+                <a href="#" class="myicon">
+                  <i class="fa fa-twitter"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#"  class="myicon">
+                  <i class="fa fa-facebook"></i>
+                </a>
+              </li>
+              <li class="list-inline-item ">
+                <a href="#" class="myicon">
+                  <i class="fa fa-linkedin"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+           
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static "vendor/jquery/jquery.min.js" %}"></script>
+    <script src="{% static "vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="{% static "vendor/jquery-easing/jquery.easing.min.js" %}"></script>
+
+    <!-- Contact form JavaScript -->
+    <script src="{% static "js/jqBootstrapValidation.js" %}"></script>
+    <script src="{% static "js/contact_me.js" %}"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="{% static "js/agency.min.js" %}"></script>
+
+<!--Login_signup JS-->
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+      <script  src="{% static "js/login_signup.js" %}"></script>
+
+
+ 
+<!--My Scripts-->
+<script type="text/javascript">
+
+$(document).ready(function () {
+    // Handler for .ready() called.
+    $('html, body').animate({
+        scrollTop: $('#form').offset().top
+    }, 'slow');
+});
+
+
+
+</script>
+ </body>
+
+
+
+</html>
