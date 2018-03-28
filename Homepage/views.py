@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
+import requests
 from django.shortcuts import render,redirect
 
 from .models import Investor,IndividualAddOn, OrganizationAddOn, Startup, StartupAddOn
@@ -190,7 +190,7 @@ def startup(request):
         #login's code
  
         if("Startup_id" in request.session):
-                return render(request,'Homepage/StartupProfile.html')   #!!SOLVED!! Issue must be Investor Home not detail form  
+                return render(request,'Profile/profile_startup.html')   #!!SOLVED!! Issue must be Investor Home not detail form  
                 
         if(request.method == "POST" and request.POST.get('Submit') == "Sign Up"):
                 return startup_signup(request)
@@ -233,17 +233,15 @@ def startup_signup(request):
         startup=Startup()
 
 
-        startup.Name=request.POST.get()
-        startup.Email=request.POST.get()
-        startup.Username=request.POST.get()
-        startup.Contact=request.POST.get()
-        startup.City=request.POST.get()
-        startup.Password=request.POST.get()
+        startup.Name=request.POST.get('Name')
+        startup.Email=request.POST.get('Email')
+        startup.Username=request.POST.get('Username')
+        startup.Contact=request.POST.get('Contact')
+        startup.City=request.POST.get('City')
+        startup.Password=request.POST.get('Password')
         startup.save()
+        Startup_SetSession(request,startup)
 
-        return render(request,'Homepage/startups_login_signup.html')
-
-        pass
 
 
 def startup_login(request):
@@ -252,21 +250,28 @@ def startup_login(request):
         
         #Logic For Login
         #if((Username == "Email" || Username == "Contact" || Username == "Email" )&& Password == "Password")
+
         login=False
         if("@" in username and "." in username):
                 if(Startup.objects.filter(Email=username,Password=password)):
-                        Startup_SetSession(request)   
                         login=True
+                        startup = Startup.objects.get(Email = username)
+                        return Startup_SetSession(request,startup)   
+                        
 
         if(str(username).isdigit()):
                 if(Startup.objects.filter(Contact=username,Password=password)):
-                        Startup_SetSession(request)
                         login=True  
+                        startup = Startup.objects.get(Contact = username)
+                        return Startup_SetSession(request,startup)
+                        
                          
         else:
                 if(Startup.objects.filter(Username=username,Password=password)):
-                        Startup_SetSession(request)
                         login=True   
+                        startup = Startup.objects.get(Username = username)
+                        return Startup_SetSession(request,startup)
+                        
 
         if login == False:
                 context={
@@ -276,11 +281,23 @@ def startup_login(request):
         pass    
 
 
-def Startup_SetSession(request):
+def Startup_SetSession(request,startup):
         request.session['Startup_id'] = startup.id
         request.session['Startup_Name'] = startup.Name 
-        redirect("/startup/")
+        return redirect("/Startup/")
 
 
 def Startup_addon(request):
         pass 
+
+def Startup_logout(request):
+        for key in request.session.keys():
+                del(request.session[key])
+        return redirect("/Startup")
+
+
+def chatbot(request):
+        quest = request.GET['question'];
+        Answer = requests.get("botServerIp:PORT/?question=%s"% (quest))
+        return  HttpResponse(Answer)
+   
