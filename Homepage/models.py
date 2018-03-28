@@ -68,7 +68,7 @@ class StartupAddOn(models.Model):
     TargetCustomers = models.CharField(max_length=500)
     Threats = models.CharField(max_length=200)
     Summary = models.CharField(max_length=1000)
-    LOGO =  Image = models.ImageField(upload_to="Team",blank = True)
+    LOGO = models.ImageField(upload_to="Team",blank = True)
     # MarketValidation
 
 

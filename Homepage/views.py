@@ -32,7 +32,7 @@ def investor(request):
     #login's code
  
     if("id" in request.session):
-        return render(request,'Homepage/InvestorProfile.html')   #!!SOLVED!! Issue must be Investor Home not detail form  
+        return render(request,'Profile/profile_investor.html')   #!!SOLVED!! Issue must be Investor Home not detail form  
         
     if(request.method == "POST" and request.POST.get('Submit') == "Sign Up"):
         return Inv_Signup(request)
@@ -99,19 +99,23 @@ def Inv_Login(request):
         login=False
         if("@" in username and "." in username):
                 if(Investor.objects.filter(Email=username,Password=password)):
-                        SetSession(request)   
+                        investor = Investor.objects.get(Email = username)
                         login=True
-
+                        return Inv_SetSession(request,investor)   
+                        
         if(str(username).isdigit()):
                 if(Investor.objects.filter(Contact=username,Password=password)):
-                        SetSession(request)
+                        investor = Investor.objects.get(Contact = username)
                         login=True  
+                        return Inv_SetSession(request,investor)
+                        
                          
         else:
                 if(Investor.objects.filter(Username=username,Password=password)):
-                        SetSession(request)
+                        investor = Investor.objects.get(Username = username)
                         login=True   
-
+                        return Inv_SetSession(request,investor)
+                        
         if login == False:
                 context={
                         'existmsg':'Credentials Incorrect or Not Registered'
@@ -147,12 +151,16 @@ def Inv_Individual(request):
         ind.save()
 
 
-def Inv_SetSession(request):
+def Inv_SetSession(request,investor):
         request.session['id'] = investor.id
         request.session['Name'] = investor.Name 
-        redirect("/Investor/")
+        return redirect("/Investor/")
 
-
+def inv_logout(request):
+        for key in request.session.keys():
+                del(request.session[key])
+        return redirect("/Investor")
+        
 
 
 
@@ -247,7 +255,7 @@ def startup_login(request):
         login=False
         if("@" in username and "." in username):
                 if(Startup.objects.filter(Email=username,Password=password)):
-                       Startup_SetSession(request)   
+                        Startup_SetSession(request)   
                         login=True
 
         if(str(username).isdigit()):
