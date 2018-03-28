@@ -8,45 +8,53 @@ from .models import Investor,IndividualAddOn, OrganizationAddOn, Startup, Startu
 # Create your views here.
 
 def home(request):
-   return render(request,'Homepage/index.html',)        #PENDING
+   return render(request,'Homepage/index.html',)        #PENDING.........
 
+
+
+#########################################
+#               INVESTOR                #
+#########################################
 def investor(request):  
-    #If session exists render Investors Homepage    
+    
     if(request.method == "POST" and request.POST.get('Submit') == "Upload"):
         #Handle File Upload
         ID = Investor.objects.get(id = int(request.session['id']))
-        
         if IndividualAddOn.objects.filter(id = request.session['id']):
                 ind = IndividualAddOn.objects.get(Username = ID)
         else:        
                 ind = IndividualAddOn()
                 ind.Username = ID
-        
         ind.Pic = request.FILES['Pic'] 
         ind.save() 
-        
         request.session['Pic'] = ind.Pic.url
-        
         return redirect("/Investor/") 
       
     #login's code
- 
+
+
+    #If session exists render Investors Homepage     
     if("id" in request.session):
         return render(request,'Profile/profile_investor.html')   #!!SOLVED!! Issue must be Investor Home not detail form  
-        
+
+    #If Signup Button Pressed    
     if(request.method == "POST" and request.POST.get('Submit') == "Sign Up"):
         return Inv_Signup(request)
-
+ 
+    #If Login Button Pressed    
     elif(request.method=="POST" and request.POST.get('Submit')=="Log In"):
         return Inv_Login(request)
         
-        #Organization's code
+
+    #Edit Profile Organization
     elif(request.method=="POST" and "Organization" in request.POST):
         return Inv_Organization(request)   
 
+    #Edit Profile Individual    
     elif(request.method=="POST" and "Individual" in request.POST):
         return Inv_Individual(request)    
 
+    #No Forms Filled So GOTO Login Signup Page    
     else:   
         return render(request,'Homepage/investors_login_signup.html',)
 
@@ -74,6 +82,7 @@ def Inv_Signup(request):
                         'existmsg':'Username already exists'
                 }
                 return render(request,'Homepage/investors_login_signup.html',context) 
+
         investor.Name = request.POST.get('Name')  
         investor.Contact = request.POST.get('Contact')    
         investor.Email = request.POST.get('Email')
@@ -81,11 +90,11 @@ def Inv_Signup(request):
         investor.Username = request.POST.get('Username')
         investor.Password = request.POST.get('Password')
         investor.save()
-
         request.session['id'] = investor.id
         request.session['Name'] = investor.Name
+        
               
-        return render(request,'Homepage/InvestorProfile.html')#!!SOLVED!! Issue must be Investor Home not detail form 
+        return render(request,'Homepage/profile_investor.html')#!!SOLVED!! Issue must be Investor Home not detail form 
 
 
 
@@ -290,12 +299,17 @@ def Startup_SetSession(request,startup):
 def Startup_addon(request):
         pass 
 
+
+
+
 def Startup_logout(request):
         for key in request.session.keys():
                 del(request.session[key])
         return redirect("/Startup")
 
 
+
+#Chat bot REQUIRES pip install requests
 def chatbot(request):
         quest = request.GET['question'];
         Answer = requests.get("botServerIp:PORT/?question=%s"% (quest))
