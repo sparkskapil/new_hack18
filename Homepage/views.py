@@ -15,16 +15,28 @@ def home(request):
 #########################################
 #               INVESTOR                #
 #########################################
+def genContext(request):
+        investor = Investor.objects.get(id = int(request.session['id']))
+        if(OrganizationAddOn.objects.filter(Username = investor).count() > 0):
+                org = OrganizationAddOn.objects.get(Username = investor)
+        else:
+                org = None
+                
+        if(IndividualAddOn.objects.filter(Username = investor).count() > 0): 
+                ind = IndividualAddOn.objects.get(Username = investor)
+        else:
+                ind = None
+        context = {'investor':investor,'organization':org,'individual':ind}
+        return context
+
+
 def investor(request):  
-    
-    
-      
     #login's code
-
-
     #If session exists render Investors Homepage     
     if("id" in request.session):
-        return render(request,'Profile/profile_investor.html')   #!!SOLVED!! Issue must be Investor Home not detail form  
+
+        context = genContext(request)
+        return render(request,'Profile/profile_investor.html',context)   #!!SOLVED!! Issue must be Investor Home not detail form  
 
     #If Signup Button Pressed    
     if(request.method == "POST" and request.POST.get('Submit') == "Sign Up"):
@@ -33,19 +45,12 @@ def investor(request):
     #If Login Button Pressed    
     elif(request.method=="POST" and request.POST.get('Submit')=="Log In"):
         return Inv_Login(request)
-        
-
-    #Edit Profile Organization
-    elif(request.method=="POST" and "Organization" in request.POST):
-        return Inv_Organization(request)   
-
-    #Edit Profile Individual    
-    elif(request.method=="POST" and "Individual" in request.POST):
-        return Inv_Individual(request)    
 
     #No Forms Filled So GOTO Login Signup Page    
     else:   
         return render(request,'Homepage/investors_login_signup.html',)
+
+
 
 
     
@@ -79,12 +84,10 @@ def Inv_Signup(request):
         investor.Username = request.POST.get('Username')
         investor.Password = request.POST.get('Password')
         investor.save()
-        request.session['id'] = investor.id
-        request.session['Name'] = investor.Name
+        return Inv_SetSession(request,investor)
         
               
-        return render(request,'Profile/profile_investor.html')#!!SOLVED!! Issue must be Investor Home not detail form 
-
+        
 
 
 def Inv_Login(request):
@@ -121,38 +124,55 @@ def Inv_Login(request):
                 return render(request,'Homepage/investors_login_signup.html',context)     
 
 
-def Inv_Organization(request):
-        org= OrganizationAddOn() 
-        id=request.session['id']
 
-        org.Username=id
-        org.OrganizationType=request.POST.get('')
-        org.URL=request.POST.get('Website')
-        org.YearFounded=request.POST.get('Year founded')
-        org.Size=request.POST.get('size')
-        org.BussinessType=request.POST.get('Company Type')
-        org.Specialties=request.POST.get('Specialties')
+
+def Inv_Organization(request):
+        org = OrganizationAddOn() 
+        ID = Investor.objects.get(id = int(request.session['id']))
+        if OrganizationAddOn.objects.filter(Username = ID):
+                org = OrganizationAddOn.objects.get(Username = ID)
+        else:        
+                org = OrganizationAddOn()
+                org.Username = ID
+
+        print request.POST.get('OrganizationType')  
+        if not request.POST.get('OrganizationType')==None:
+                org.OrganizationType=request.POST.get('OrganizationType')
+        if not request.POST.get('URL')=="":
+                org.URL=request.POST.get('URL')
+        if not request.POST.get('YearFounded')=="":
+                org.YearFounded=request.POST.get('YearFounded')
+        if not request.POST.get('Size')=="":
+                org.Size=request.POST.get('Size')
+        if not request.POST.get('BusinessType')==None:
+                org.BusinessType=request.POST.get('BusinessType')
+        if not request.POST.get('Specialities')=="":
+                org.Specialites=request.POST.get('Specialities')
         org.save()
-        return render(request,'Homepage/investorDetails.html')
+        return redirect("/Investor/Edit/")
  
 
-
-
-
 def Inv_Individual(request):
-        id = request.session['id']
-        ind = IndividualAddOn()
-        ind.Username = id
+        ind = IndividualAddOn() 
+        ID = Investor.objects.get(id = int(request.session['id']))
+        if IndividualAddOn.objects.filter(Username = ID):
+                ind = IndividualAddOn.objects.get(Username = ID)
+        else:        
+                ind = IndividualAddOn()
+                ind.Username = ID
+        
         ind.BusinessType = request.POST.get('BusinessType')
         ind.StartupsFunded = request.POST.get('StartupsFunded')
         ind.URL = request.POST.get('URL')
         ind.save()
+        return redirect("/Investor/Edit/")
 
 
 def Inv_SetSession(request,investor):
-        request.session['id'] = investor.id
-        request.session['Name'] = investor.Name 
+        request.session['id'] = investor.id        
         return redirect("/Investor/")
+
+
 
 def inv_logout(request):
         for key in request.session.keys():
@@ -160,24 +180,27 @@ def inv_logout(request):
         return redirect("/Investor")
         
 
-
-
-
 def inv_edit(request):
-        print "*"*20
-        print resolve(request.path_info).url_name
-        print "*"*20
+        
         ###################
         #     SECURITY    #
         ###################        
         #if session is not initialized the edit profile must not work
         if checksession(request):
-                redirect('/Investor')
+                return redirect('/Investor')
 
-        if(request.method == "POST" and request.POST.get('Submit') == "Upload"):
+        #Edit Profile Organization    
+        if(request.method=="POST" and "Organization" in request.POST):
+                return Inv_Organization(request)   
+
+        #Edit Profile Individual    
+        elif(request.method=="POST" and "Individual" in request.POST):
+                return Inv_Individual(request)    
+        
+        elif(request.method == "POST" and request.POST.get('Submit') == "Upload"):
                 #Handle File Upload
                 ID = Investor.objects.get(id = int(request.session['id']))
-                if IndividualAddOn.objects.filter(id = request.session['id']):
+                if IndividualAddOn.objects.filter(Username = ID):
                         ind = IndividualAddOn.objects.get(Username = ID)
                 else:        
                         ind = IndividualAddOn()
@@ -187,16 +210,41 @@ def inv_edit(request):
                 ind.save() 
                 request.session['Pic'] = ind.Pic.url
                 return redirect("/Investor/Edit") 
-        
-        return render(request,'Profile/edit.html',{'edit':'1'})
+        context = genContext(request)
+        context['edit'] = '1'
+        return render(request,'Profile/edit.html',context)
 
 def checksession(request):
          if("id" not in request.session):
                 return True
         
+
+
+
+
+
+
+
+
+
+
+
+
+
 ##########################################################################
         #STARTUPS
 ##########################################################################
+
+
+
+
+
+
+
+
+
+
+
 
 def startup(request):
         if(request.method == "POST" and request.POST.get('Submit') == "Upload"):
