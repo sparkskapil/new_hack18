@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 import requests
 from django.shortcuts import render,redirect
-
+from django.core.urlresolvers import resolve
 from .models import Investor,IndividualAddOn, OrganizationAddOn, Startup, StartupAddOn
 
 # Create your views here.
@@ -17,18 +17,7 @@ def home(request):
 #########################################
 def investor(request):  
     
-    if(request.method == "POST" and request.POST.get('Submit') == "Upload"):
-        #Handle File Upload
-        ID = Investor.objects.get(id = int(request.session['id']))
-        if IndividualAddOn.objects.filter(id = request.session['id']):
-                ind = IndividualAddOn.objects.get(Username = ID)
-        else:        
-                ind = IndividualAddOn()
-                ind.Username = ID
-        ind.Pic = request.FILES['Pic'] 
-        ind.save() 
-        request.session['Pic'] = ind.Pic.url
-        return redirect("/Investor/") 
+    
       
     #login's code
 
@@ -94,7 +83,7 @@ def Inv_Signup(request):
         request.session['Name'] = investor.Name
         
               
-        return render(request,'Homepage/profile_investor.html')#!!SOLVED!! Issue must be Investor Home not detail form 
+        return render(request,'Profile/profile_investor.html')#!!SOLVED!! Issue must be Investor Home not detail form 
 
 
 
@@ -174,6 +163,37 @@ def inv_logout(request):
 
 
 
+def inv_edit(request):
+        print "*"*20
+        print resolve(request.path_info).url_name
+        print "*"*20
+        ###################
+        #     SECURITY    #
+        ###################        
+        #if session is not initialized the edit profile must not work
+        if checksession(request):
+                redirect('/Investor')
+
+        if(request.method == "POST" and request.POST.get('Submit') == "Upload"):
+                #Handle File Upload
+                ID = Investor.objects.get(id = int(request.session['id']))
+                if IndividualAddOn.objects.filter(id = request.session['id']):
+                        ind = IndividualAddOn.objects.get(Username = ID)
+                else:        
+                        ind = IndividualAddOn()
+                        ind.Username = ID
+        
+                ind.Pic = request.FILES['Pic'] 
+                ind.save() 
+                request.session['Pic'] = ind.Pic.url
+                return redirect("/Investor/Edit") 
+        
+        return render(request,'Profile/edit.html',{'edit':'1'})
+
+def checksession(request):
+         if("id" not in request.session):
+                return True
+        
 ##########################################################################
         #STARTUPS
 ##########################################################################
