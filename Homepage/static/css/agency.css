@@ -134,6 +134,7 @@ img::-moz-selection {
   color: #fed136;
 }
 
+
 @media (min-width: 992px) {
   #mainNav {
     padding-top: 25px;

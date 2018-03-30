@@ -1,0 +1,658 @@
+
+<!DOCTYPE html>
+<html lang="en">
+{%load static%}
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Miracles Whipped</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static "vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="{% static "vendor/font-awesome/css/font-awesome.min.css" %}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+    <!-- Custom styles for this template -->
+    <link href="{% static "css/agency.min.css" %}" rel="stylesheet">
+    <style>
+        .overlay{position:relative; z-index:1;}
+        .overlay::after{color:inherit; background-color:rgba(0,0,0,.55);}
+        .overlay::after{display:block; position:absolute; top:0; left:0; width:100%; height:100%; content:""; z-index:-1;}
+        .more-btn{
+          background: rgba(19, 35, 47);border:none;
+
+        }
+        .more-btn:hover{
+            background: #1ab188 !important;
+        }
+        .bty:active{
+          border:none !important;
+        }
+        .bty:hover{
+            background:rgba(19, 35, 47) !important;
+            color: #f2f2f2;
+        }
+      </style>
+  </head>
+
+  <body id="page-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">Hackathon 2K18</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav text-uppercase ml-auto">
+            
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#portfolio">Portfolio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#about">Our Process</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#team">Team</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="masthead overlay">
+      <div class="container">
+        <div class="intro-text">
+         
+              <div class="row justify-content-between">
+                  <div class="col-md-3">
+                     <button class="btn btn-primary btn-xl text-uppercase js-scroll-trigger bty"  onclick="window.location = '/Startup'">
+                     Start up
+                     </button>
+                  </div>
+                  <div class="col-md-3">
+                       <button class="btn btn-primary btn-xl text-uppercase js-scroll-trigger bty" onclick="window.location = '/Investor'">
+                        Investor
+                       </button>
+                  </div>
+             </div>
+
+        <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger more-btn" href="#about">Tell Me More</a>
+      </div>
+    </header>
+
+  
+
+    <!-- Portfolio Grid -->
+    <section class="bg-light" id="portfolio">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading text-uppercase">Start Ups</h2>
+            <h3 class="section-subheading text-muted">Some of our Leading Ventures.</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 col-sm-6 portfolio-item">
+            <a class="portfolio-link" data-toggle="modal" href="#portfolioModal1">
+              <div class="portfolio-hover">
+                <div class="portfolio-hover-content">
+                  <i class="fa fa-plus fa-3x"></i>
+                </div>
+              </div>
+              <img class="img-fluid" src="{% static "img/portfolio/doort.png" %}" alt="" >
+            </a>
+            <div class="portfolio-caption">
+              <h4>DoorDash</h4>
+              <p class="text-muted">On-demand restaurant delivery service</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6 portfolio-item">
+            <a class="portfolio-link" data-toggle="modal" href="#portfolioModal2">
+              <div class="portfolio-hover">
+                <div class="portfolio-hover-content">
+                  <i class="fa fa-plus fa-3x"></i>
+                </div>
+              </div>
+              <img class="img-fluid" src="{% static "img/portfolio/Webp.net-resizeimage (1).png" %}" alt="" width="220px" height="110px">
+            </a>
+            <div class="portfolio-caption">
+              <h4>Tushky</h4>
+              <p class="text-muted">Keep Wandering</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6 portfolio-item">
+            <a class="portfolio-link" data-toggle="modal" href="#portfolioModal3">
+              <div class="portfolio-hover">
+                <div class="portfolio-hover-content">
+                  <i class="fa fa-plus fa-3x"></i>
+                </div>
+              </div>
+              <img class="img-fluid" src="{% static "img/portfolio/Ant.png" %}" alt="" width="220px" height="110px" >
+            </a>
+            <div class="portfolio-caption">
+              <h4>Ant Financial</h4>
+              <p class="text-muted">We work Relentlessly</p>
+            </div>
+          </div>
+        </div>
+      </div>
+       <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <br><br><br><br>
+            <h2 class="section-heading text-uppercase">Investors</h2>
+            <h3 class="section-subheading text-muted">Some of our Leading Investors.</h3>
+          </div>
+        </div>
+         <div class="row"> <div class="col-md-4 col-sm-6 portfolio-item">
+            <a class="portfolio-link" data-toggle="modal" href="#portfolioModal4">
+              <div class="portfolio-hover">
+                <div class="portfolio-hover-content">
+                  <i class="fa fa-plus fa-3x"></i>
+                </div>
+              </div>
+              <img class="img-fluid" src="{% static "img/portfolio/Kotak.svg" %}" alt="">
+            </a>
+            <div class="portfolio-caption">
+              <h4>Kotak Mahindra</h4>
+              <p class="text-muted">We Fund, You Earn!</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6 portfolio-item">
+            <a class="portfolio-link" data-toggle="modal" href="#portfolioModal5">
+              <div class="portfolio-hover">
+                <div class="portfolio-hover-content">
+                  <i class="fa fa-plus fa-3x"></i>
+                </div>
+              </div>
+              <img class="img-fluid" src="{% static "img/portfolio/IBM.svg" %}" alt="">
+            </a>
+            <div class="portfolio-caption">
+              <h4>IBM</h4>
+              <p class="text-muted">Innvoation, Brilliance and More</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6 portfolio-item">
+            <a class="portfolio-link" data-toggle="modal" href="#portfolioModal6">
+              <div class="portfolio-hover">
+                <div class="portfolio-hover-content">
+                  <i class="fa fa-plus fa-3x"></i>
+                </div>
+              </div>
+              <img class="img-fluid" src="{% static "img/portfolio/google.jpg" %}" alt="">
+            </a>
+            <div class="portfolio-caption">
+              <h4>Google Cloud Startups</h4>
+              <p class="text-muted">Start with Us!</p>
+            </div>
+          </div></div>
+       
+        </div>
+      </div>
+    </section>
+
+
+    <!-- About -->
+    <section id="about">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading text-uppercase">Our Process</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <ul class="timeline">
+              <li>
+                <div class="timeline-image">
+                  <img class="rounded-circle img-fluid" src="{% static "img/about/register.png" %}" alt="">
+                </div>
+                <div class="timeline-panel">
+                  <div class="timeline-heading">
+                    <h4>Step 1</h4>
+                    <h4 class="subheading">Registration</h4>
+                  </div>
+                  <div class="timeline-body">
+                    <p class="text-muted">Start Up Ventures and Investors will Register at our Portal</p>
+                  </div>
+                </div>
+              </li>
+              <li class="timeline-inverted">
+                <div class="timeline-image">
+                  <img class="rounded-circle img-fluid" src="{% static "img/about/form.jpg" %}" alt="">
+                </div>
+                <div class="timeline-panel">
+                  <div class="timeline-heading">
+                    <h4>Step 2</h4>
+                    <h4 class="subheading">Form Filling</h4>
+                  </div>
+                  <div class="timeline-body">
+                    <p class="text-muted">Fill various details like the name of your startup/investing firm.</p>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="timeline-image">
+                  <img class="rounded-circle img-fluid" src="{% static "img/about/3.jpg" %}" alt="">
+                </div>
+                <div class="timeline-panel">
+                  <div class="timeline-heading">
+                    <h4>Step 3</h4>
+                    <h4 class="subheading">Job is Done!</h4>
+                  </div>
+                  <div class="timeline-body">
+                    <p class="text-muted">Our portal will guide you about various investing firms Startups can approach for funds and various Start Ups Ventures are visible to Investors. </p>
+                  </div>
+                </div>
+              </li>
+             
+              <li class="timeline-inverted">
+                <div class="timeline-image">
+                  <h4>Be Part
+                    <br>Of Our
+                    <br>Story!</h4>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Team -->
+    <section class="bg-light" id="team">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading text-uppercase">Our Amazing Team</h2>
+            <h3 class="section-subheading text-muted">Together We Work, Together We Conquer</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="team-member">
+              <img class="mx-auto rounded-circle" src="{% static "img/team/Hussain.jpg" %}" alt="">
+              <h4>Hussain Ali Bohra</h4>
+              
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="team-member">
+              <img class="mx-auto rounded-circle" src="{% static "img/team/Shaunak.jpg" %}" alt="">
+              <h4>Shaunak Joshi</h4>
+              
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="team-member">
+              <img class="mx-auto rounded-circle" src="{% static "img/team/Kapil.jpg" %}" alt="">
+              <h4>Kapil Verma</h4>
+             
+            </div>
+          </div>
+        </div>
+         <div class="row">
+          <div class="col-sm-4">
+            <div class="team-member">
+              <img class="mx-auto rounded-circle" src="{% static "img/team/abdul.jpg" %}" alt="">
+              <h4>Abdul Noushad Sheikh</h4>
+              
+            </div>
+          </div>
+         <div class="col-sm-4">
+            <div class="team-member">
+              <img class="mx-auto rounded-circle" src="{% static "img/team/chinmay.jpg" %}" alt="">
+              <h4>Chinmay Pophale</h4>
+
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="team-member">
+              <img class="mx-auto rounded-circle" src="{% static "img/team/tanvi.jpg" %}" alt="">
+              <h4>Tanvi Shah</h4>
+              
+             
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Contact -->
+    <section id="contact">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading text-uppercase">Contact Us</h2>
+            <h3 class="section-subheading text-muted">We will get back to You!</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <form id="contactForm" name="sentMessage" novalidate>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <input class="form-control" id="name" type="text" placeholder="Your Name *" required data-validation-required-message="Please enter your name.">
+                    <p class="help-block text-danger"></p>
+                  </div>
+                  <div class="form-group">
+                    <input class="form-control" id="email" type="email" placeholder="Your Email *" required data-validation-required-message="Please enter your email address.">
+                    <p class="help-block text-danger"></p>
+                  </div>
+                  <div class="form-group">
+                    <input class="form-control" id="phone" type="tel" placeholder="Your Phone *" required data-validation-required-message="Please enter your phone number.">
+                    <p class="help-block text-danger"></p>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <textarea class="form-control" id="message" placeholder="Your Message *" required data-validation-required-message="Please enter a message."></textarea>
+                    <p class="help-block text-danger"></p>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-lg-12 text-center">
+                  <div id="success"></div>
+                  <button id="sendMessageButton" class="btn btn-primary btn-xl text-uppercase" type="submit">Send Message</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <span class="copyright">Copyright &copy; Miracle</span>
+          </div>
+          <div class="col-md-4">
+            <ul class="list-inline social-buttons">
+              <li class="list-inline-item">
+                <a href="#">
+                  <i class="fa fa-twitter"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#">
+                  <i class="fa fa-facebook"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#">
+                  <i class="fa fa-linkedin"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <ul class="list-inline quicklinks">
+              <li class="list-inline-item">
+                <a href="#">Privacy Policy</a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#">Terms of Use</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Portfolio Modals -->
+
+    <!-- Modal 1 -->
+    <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+              <div class="rl"></div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mx-auto">
+                <div class="modal-body">
+                  <!-- Project Details Go Here -->
+                  <h2 class="text-uppercase">DoorDash</h2>
+                  <p class="item-intro text-muted">On-demand restaurant delivery service</p>
+                  <img class="img-fluid d-block mx-auto" src="{% static "img/portfolio/Door.png"%}" alt="">
+                  <p>DoorDash is an on-demand restaurant delivery service founded in 2013 by Stanford students Andy Fang, Stanley Tang, Tony Xu and Evan Moore.A Y Combinator-backed company, DoorDash is one of several technology companies that uses logistics services to offer food delivery from restaurants on-demand. DoorDash launched in San Francisco and has since expanded to 42 markets and more than 500 cities[5] across North America.</p>
+                 
+                  <button class="btn btn-primary" data-dismiss="modal" type="button">
+                    <i class="fa fa-times"></i>
+                    Close Project</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal 2 -->
+    <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+              <div class="rl"></div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mx-auto">
+                <div class="modal-body">
+                  <!-- Project Details Go Here -->
+                  <h2 class="text-uppercase">Tushky</h2>
+                  <p class="item-intro text-muted">Keep Wandering</p>
+                  <img class="img-fluid d-block mx-auto" src="{% static "img/portfolio/tushky.png" %}" alt="">
+                  <p>Tushky is an online marketplace for freetime. In India, leisure planning sucks. There are very few options beyond Movie, Mall, Dinner plus there are concerns of quality.</p>
+
+                  <p>At tushky, we discover and curate activities and activity providers which stand out, give them a good inventory back-end and an activity booking engine to make activity booking as easy as movie ticket booking for the users.</p>
+
+<p>Anyone can sell(monetize) his/her freetime by offering activities & experiences to residents and travelers at tushky’s online marketplace.</p>
+
+<p>It’s super easy to list an experience and start selling the extra 2 hours you have on Sunday, for example.</p>
+
+<p>Listing is free. We only charge a service fee on booking.</p>
+
+<p>Backed by some of the best known investors and advisers in India and silicon valley.</p>
+
+
+      
+                  <button class="btn btn-primary" data-dismiss="modal" type="button">
+                    <i class="fa fa-times"></i>
+                    Close Project</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal 3 -->
+    <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+              <div class="rl"></div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mx-auto">
+                <div class="modal-body">
+                  <!-- Project Details Go Here -->
+                  <h2 class="text-uppercase">Ant Financial</h2>
+                  <p class="item-intro text-muted">The Most valuable fintech company in the world.</p>
+                  <img class="img-fluid d-block mx-auto" src="{% static "img/portfolio/Ant.png" %}" alt="">
+                  <p>Ant Financial Services Group  is an affiliate company of the Chinese Alibaba Group. Ant Financial is the most valuable fintech company in the world. It operates Alipay, the world's largest mobile and online payments platform as well as Yu’e Bao, the world's largest money-market fund. It also runs the Sesame Credit credit rating system. As of September 2017, Ant Financial unveiled its facial recognition payment technology through its Alipay services.</p>
+                
+                  <button class="btn btn-primary" data-dismiss="modal" type="button">
+                    <i class="fa fa-times"></i>
+                    Close Project</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal 4 -->
+    <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+              <div class="rl"></div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mx-auto">
+                <div class="modal-body">
+                  <!-- Project Details Go Here -->
+                  <h2 class="text-uppercase">Kotak Mahindra Bank</h2>
+                  <p class="item-intro text-muted">We Fund, You Earn.</p>
+                  <img class="img-fluid d-block mx-auto" src="{% static "img/portfolio/kotak.svg" %}" alt="">
+                  <p>A dedicated solution for start-ups to fulfil all their banking needs. This product is tailored to meet all requirements of a start-ups, offering banking and payment solutions along with Value added services, forex services and Door step banking with Non maintenance Charges (NMC) waiver for first 12 month from the date of account opening. </p>
+                  <p>It will be offered to Start-up* only (*Any constitution having Date of Incorporation within 24 months of account opening).<br>Start-up account is having two proposition i.e. Start-up Regular with Rs 50k and Start-up Premium with Rs 1 Lac Average Quarterly Balance.<br>Value added services: </p>
+                  <ul>
+                                        <li>Advisory services through an empanelled Chartered Accountant</li>
+                                        <li>Business Set up and Registration</li>
+                                        <li>Assistance in relation to Accounting requirement,Income Tax return,Service Tax return,Tax audit etc</li>
+                                        <li>Media Solutions (Digital Marketing,Collaterals printing,Public relations & e-commerce)
+                                        </li>
+                                        <li>End to End Business Solutions (Finance tools, HR Tools, Invoicing, Inventory, CRM, Website Creator, App creator, Sales Management Applications , Co. Start up services)</li>
+                                        <li>Tax Solutions (Taxation services for Launch & Management of Businesses)</li>
+                                        <li>Workplace Solutions</li>
+                                        <li>Digital signature & certificates (All classes of encrypted Digital Signatures & Certificates)</li>
+                                        <li>Concierge Services</li>
+                                    </ul>
+                                    <p>Additional Privileges :</p>
+                                    <ul>
+                                            <li>Salary Account – Corporate Salary account for Start Up employees with Minimum criteria of 5 employees and average salary of Rs 25,000/</li>
+                                            <li>No registration charges for NetIT (CMS Payment Module) subject to maintenance of Average Quarterly Balance in the account while Transaction charges will be applicable.</li>
+                                        </ul>
+                                        <p>*Applicable for Startup Premium Variant only.</p>
+                  <button class="btn btn-primary" data-dismiss="modal" type="button">
+                    <i class="fa fa-times"></i>
+                    Close Project</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal 5 -->
+    <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+              <div class="rl"></div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mx-auto">
+                <div class="modal-body">
+                  <!-- Project Details Go Here -->
+                  <h2 class="text-uppercase">IBM Global Entrepreneur Program</h2>
+                  <p class="item-intro text-muted">A Stop Destination for for Start Up Guidance!</p>
+                  <img class="img-fluid d-block mx-auto" src="{% static "img/portfolio/IBM.svg" %}" alt="">
+                  <p>The IBM Global Entrepreneur Program (GEP) is the single IBM program designed to provide startups access to up to $120,000 of technology usage credits, leading experts and enterprise-grade Cloud, Data, IoT, Blockchain and AI technologies to help solve real problems and ultimately help get their innovative products to market faster. The program is offered across 3 member levels - Starter, Builder and Premium levels. The Builder level offers $1000/- month of credits on the IBM Cloud and the Premium level offers $10,000/ per month subject to few eligibility criteria. </p>
+                 
+                  <button class="btn btn-primary" data-dismiss="modal" type="button">
+                    <i class="fa fa-times"></i>
+                    Close Project</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal 6 -->
+    <div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+              <div class="rl"></div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mx-auto">
+                <div class="modal-body">
+                  <!-- Project Details Go Here -->
+                  <h2 class="text-uppercase">Google Cloud Startup Program</h2>
+                  <p class="item-intro text-muted">Designed to help startups build and scale using Google Cloud</p>
+                  <img class="img-fluid d-block mx-auto" src="{% static "img/portfolio/06-full.jpg" %}" alt="">
+                  <p>Start Package<br>
+
+                          Startups eligible for our Start Package will recieve:</p>
+                  <ul class="list-inline" style="list-style-type:disc">
+                    <li>Invitations ​to ​exclusive ​local ​Google ​Cloud ​events.</li><br>
+                    <li>A ​smaller ​Google, ​via ​introductions ​internally ​where ​it matters ​to ​startups: ​Ads, ​Play, ​Maps, Chrome, ​and more.</li><br>
+                    <li>A ​streamlined ​application ​process ​to ​our ​Spark program ​to ​extend ​your ​credits ​to ​$20,000 ​for ​a second year ​as ​your ​business ​continues ​to ​grow ​(and ​to ​our ​Surge ​program ​for ​a ​third ​year ​as your ​business ​continues ​to ​grow). </li><br>
+                    <li>Training ​through ​Code ​Labs, ​classroom-style ​and online ​training ​courses ​to ​learn ​everything you ​need ​to start ​building ​your ​vision.</li><br>
+                  </ul>
+                  <button class="btn btn-primary" data-dismiss="modal" type="button">
+                    <i class="fa fa-times"></i>
+                    Close Project</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static "vendor/jquery/jquery.min.js" %}"></script>
+    <script src="{% static "vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="{% static "vendor/jquery-easing/jquery.easing.min.js" %}"></script>
+
+    <!-- Contact form JavaScript -->
+    <script src="{% static "js/jqBootstrapValidation.js" %}"></script>
+    <script src="{% static "js/contact_me.js" %}"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="{% static "js/agency.min.js" %}"></script>
+
+  </body>
+
+</html>

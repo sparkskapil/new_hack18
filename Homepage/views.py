@@ -8,9 +8,7 @@ from .models import Investor,IndividualAddOn, OrganizationAddOn, Startup, Startu
 # Create your views here.
 
 def home(request):
-   return render(request,'Homepage/index.html',)        #PENDING.........
-
-
+   return render(request,'Homepage/index.html',)       
 
 #########################################
 #               INVESTOR                #
