@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 import requests
 from django.shortcuts import render,redirect
 from django.core.urlresolvers import resolve
-from .models import Investor,IndividualAddOn, OrganizationAddOn, Startup, StartupAddOn
+from .models import *#Investor,IndividualAddOn, OrganizationAddOn, Startup, StartupAddOn, Filter
 
 # Create your views here.
 
@@ -24,7 +24,17 @@ def genContext(request):
                 ind = IndividualAddOn.objects.get(Username = investor)
         else:
                 ind = None
-        context = {'investor':investor,'organization':org,'individual':ind}
+        if(Filter.objects.filter(Username = investor).count() > 0):
+                filters = Filter.objects.filter(Username = investor)
+        else:    
+                filters = None
+        context = {'investor':investor,'organization':org,'individual':ind,'filters':filters}
+        if(ActiveFilter.objects.filter(Username = investor).count() > 0):
+                accfilter = ActiveFilter.objects.get(Username = investor)
+        else:    
+                accfilter = None
+          
+        context = {'investor':investor,'organization':org,'individual':ind,'filters':filters,'ActiveFilter':accfilter}
         return context
 
 
@@ -89,7 +99,6 @@ def Inv_Signup(request):
 
 
 def Inv_Login(request):
-        print "In login"
         username = request.POST.get('Username')
         password = request.POST.get('Password')
         
@@ -132,8 +141,7 @@ def Inv_Organization(request):
         else:        
                 org = OrganizationAddOn()
                 org.Username = ID
-
-        print request.POST.get('OrganizationType')  
+ 
         if not request.POST.get('OrganizationType')==None:
                 org.OrganizationType=request.POST.get('OrganizationType')
         if not request.POST.get('URL')=="":
@@ -206,7 +214,6 @@ def inv_edit(request):
         
                 ind.Pic = request.FILES['Pic'] 
                 ind.save() 
-                request.session['Pic'] = ind.Pic.url
                 return redirect("/Investor/Edit") 
         context = genContext(request)
         context['edit'] = '1'
@@ -220,9 +227,59 @@ def checksession(request):
 
 
 
+def filter(request):
+       
+        ID = Investor.objects.get(id = int(request.session['id']))
+        if (request.method=="POST" and request.POST.get("Submit")=="Add"):
+                
+                if Filter.objects.filter(Username = ID, Name = request.POST.get("Name")):
+                        filter = Filter.objects.get(Username = ID, Name = request.POST.get("Name"))
+                else:
+                        filter = Filter()
+                filter.Name = request.POST.get("Name")
+                filter.BusinessSector = request.POST.get("BusinessSector")
+                filter.Location = request.POST.get("Location")
+                filter.Stage = request.POST.get("Stage")
+                filter.Username = ID
+                filter.save()
+                return redirect("/Investor/Filter")
+                
+        elif (request.method=="POST" and request.POST.get("Submit")=="Delete"):
+                filter = Filter.objects.get(id = int(request.POST.get("id")))
+                filter.delete()
+                return redirect("/Investor/Filter")
+                
+        context = genContext(request)
+        context['filter'] = '1'
+        if Filter.objects.filter(Username = ID):
+                context['filter_count'] = Filter.objects.filter(Username = ID).count()
+        return render(request,"Profile/addfilter.html",context)
+        pass
 
 
 
+def ActivateFilter(request):
+        filter_id = request.GET['id']
+        ID = Investor.objects.get(id = int(request.session['id']))
+
+        if(filter_id == "All"):
+                if ActiveFilter.objects.filter(Username = ID):
+                        accfilter = ActiveFilter.objects.get(Username = ID)
+                        accfilter.delete()
+                redirect("/Investor/")  
+
+        else:
+                Filt = Filter.objects.get(id=filter_id)
+                if ActiveFilter.objects.filter(Username = ID):
+                        accfilter = ActiveFilter.objects.get(Username = ID)
+                else:
+                        accfilter = ActiveFilter()   
+
+                accfilter.Username = ID
+                accfilter.ActiveFilter = Filt
+                accfilter.save()
+                return redirect("/Investor/")
+        return redirect("/Investor/")
 
 
 
@@ -236,11 +293,180 @@ def checksession(request):
 
 
 
+def Startup_Edit(request):
+        if(request.method=='POST'):
+                startup = Startup.objects.get(id = int(request.session['Startup_id']))
+                if StartupAddOn.objects.filter(startup = startup):
+                        AddOn = StartupAddOn.objects.get(startup = startup)
+                else:
+                        AddOn = StartupAddOn()
+
+                if(not request.POST.get('startup_status') == ""):
+                        AddOn.Status = request.POST.get('startup_status')
+                if(not request.POST.get('startup_stage') == ""):
+                        AddOn.Stage = request.POST.get('startup_stage')
+               
+               #IMAGE
+                if 'logo_img' in  request.FILES.keys() :
+                        AddOn.Logo = request.FILES['logo_img']
+                
+                if(not request.POST.get('tagline') == ""):
+                        AddOn.Tagline = request.POST.get('tagline')
+                if(not request.POST.get('startup_website') == ""):
+                        AddOn.Website = request.POST.get('startup_website')
+                if(not request.POST.get('startup_sector') == ""):
+                        AddOn.StartupSector = request.POST.get('startup_sector')
+                
+                if(not request.POST.get("product_name") == ""):
+                        AddOn.ProductName = request.POST.get('product_name')
+                
+                if 'product_image' in  request.FILES.keys() :
+                        AddOn.ProductImage = request.FILES['product_image']
+
+                '''
+
+                Customers1 = request.POST.getlist("Customer[]")
+                metrics =  request.POST.getlist("customer_metric[]")
+
+                if not max(len(Customers1),len(metrics)) == 0:
+                        if(Customers.objects.filter(startup = startup)>0):
+                                customers= Customers.objects.filter(startup = startup)
+                                for customer in customers:
+                                        customer.delete()
+
+                            
+                for i in range(0,max(len(Customers1),len(metrics))):
+                        C = Customers()
+                        if i<len(Customers1):
+                                C.Customer = Customers1[i]
+                        if(i<len(metrics):
+                                C.Metric = metrics[i]
+                        C.startup = startup
+                        C.save()
+                
+              
+                 
+                Problems = request.POST.getlist("Problem[]")
+                problemimgs = request.FILES.getlist("problemimg[]")
+            
+                if not max(len(Problems),len(problemimgs)) == 0:
+                        if(Problem.objects.filter(startup = startup)>0):
+                                problems = Problem.objects.filter(startup = startup)
+                                for problem in problems:
+                                        problem.delete()
+                
+                for j in range(0,max(len(problems),len(problemimgs))):
+                       
+                        P = Problem()
+                        if(j<len(Problems)):
+                                P.Problem = Problems[j]
+                        if(j<len(problemimgs)):
+                                P.ProblemImg = problemimgs[j]
+                        P.startup = startup
+                        P.save()
+
+                
+                Solutions = request.POST.getlist("Solution[]")
+                slutionimgs = request.POST.getlist("problemimg[]")
+                
+                if not max(len(Solutions),len(solutionimgs)) == 0:
+                        if(Solution.objects.filter(startup = startup)>0):
+                                solutions = Solution.objects.filter(startup = startup)
+                                for solution in solutions:
+                                        solution.delete()
+               
+                for i in range(0,max(len(solutions),len(solutionimgs))):
+                        C = Solution()
+                        if i < len(Solutions):
+                                C.Solution = solution[i]
+                        if i < len(solutionimgs):
+                                C.SolutionImg = solutionimg[i]
+                        C.startup = startup
+                        C.save()
+                
+                
+                Teams = request.POST.getlist("member_name[]")
+                Designations =  request.POST.getlist("designation[]")
+                Responsibilities =  request.POST.getlist("responsibilities[]")
+                Emails =  request.POST.getlist("email[]")
+                teamimgs = request.POST.getlist("teamimg[]")
+                
+                if not len(Teams) == 0:
+                        if(Team.objects.filter(startup = startup)>0):
+                                teams = Team.objects.filter(startup = startup)
+                                for team in teams:
+                                        team.delete()
+                
+                for i in range(0,len(Teams)):
+                        C = Team()
+                        if i < len(Teams):
+                                C.Name = Teams[i]
+                        if i < len(Designations):
+                                C.Designation = Designations[i]
+                        if i < len(Responsibilities):
+                                C.Responsibility = Responsibilities[i]
+                        if i < len(Emails):
+                                C.Email = Emails[i]
+                        C.startup = startup
+                        C.save()
+                
+                Competetors = request.POST.getlist("Competitor[]")
+                Opportunities =  request.POST.getlist("Opportunity[]")
+                compimg =  request.POST.getlist("competitorimg[]")
+                
+                if(not len(Competetors) == 0):
+                        if(Competitor.objects.filter(startup = startup)>0):
+                                competitors = Competitor.objects.filter(startup = startup)
+                                for competitor in competitors:
+                                        competitor.delete()
+                
+                for i in range(0,len(Competetors)):
+                        C = Compet  
+                
+                if(Funding.objects.filter(startup = startup)>0):
+                        fundings = Funding.objects.filter(startup = startup)
+                        for funding in fundings:
+                                funding.delete()
+
+                if(Sales.objects.filter(startup = startup)>0):
+                        sales = Sales.objects.filter(startup = startup)
+                        for sale in sales:
+                                sale.delete()
+
+                if(BusinessModel.objects.filter(startup = startup)>0):
+                        businessmodels = BusinessModel.objects.filter(startup = startup)
+                        for businessmodel in businessmodels:
+                                businessmodel.delete()
+
+                if(MarketValidation.objects.filter(startup = startup)>0):
+                        marketvalidations = marketvalidation.objects.filter(startup = startup)
+                        for marketvalidation in marketvalidations:
+                                marketvalidation.delete() 
+                '''
+                
+                        
+                AddOn.startup = startup
+                AddOn.save()
+
+        context = genContextStartup(request)
+        context['edit'] = '1'
+        return render(request,"Profile/edit_startup.html",context)
 
 
+def genContextStartup(request):
+        startup = Startup.objects.get(id = int(request.session['Startup_id']))
+        # if(OrganizationAddOn.objects.filter(Username = investor).count() > 0):
+        #         org = OrganizationAddOn.objects.get(Username = investor)
+        # else:
+        #         org = None
+                
+        if(StartupAddOn.objects.filter(startup = startup).count() > 0): 
+                addon = StartupAddOn.objects.get(startup = startup)
+        else:
+                addon = None
 
-
-
+        context = {'startup':startup,'addon':addon}
+        return context
 
 
 
@@ -250,10 +476,10 @@ def startup(request):
                 ID = Startup.objects.get(id = int(request.session['Startup_id']))
                 
                 if StartupAddOn.objects.filter(id = request.session['Startup_id']):
-                        std = StartupAddOn.objects.get(Username = ID)
+                        std = StartupAddOn.objects.get(startup = ID)
                 else:        
                         std = StartupAddOn()
-                        std.Username = ID
+                        std.startup = ID
                 
                 ind.Pic = request.FILES['Pic'] 
                 ind.save() 
@@ -265,15 +491,15 @@ def startup(request):
         #login's code
  
         if("Startup_id" in request.session):
-                return render(request,'Profile/profile_startup.html')   #!!SOLVED!! Issue must be Investor Home not detail form  
+                context = genContextStartup(request)
+               
+                return render(request,'Profile/profile_startup.html',context)   #!!SOLVED!! Issue must be Investor Home not detail form  
                 
         if(request.method == "POST" and request.POST.get('Submit') == "Sign Up"):
                 return startup_signup(request)
 
         elif(request.method=="POST" and request.POST.get('Submit')=="Log In"):
                 return startup_login(request)
-                
-  
 
         else:   
                 return  render(request,'Homepage/startups_login_signup.html')
@@ -306,8 +532,6 @@ def startup_signup(request):
                 return render(request,'Homepage/investors_login_signup.html',context) 
         
         startup=Startup()
-
-
         startup.Name=request.POST.get('Name')
         startup.Email=request.POST.get('Email')
         startup.Username=request.POST.get('Username')
@@ -315,8 +539,8 @@ def startup_signup(request):
         startup.City=request.POST.get('City')
         startup.Password=request.POST.get('Password')
         startup.save()
-        Startup_SetSession(request,startup)
-
+        return Startup_SetSession(request,startup)
+         
 
 
 def startup_login(request):
@@ -358,7 +582,6 @@ def startup_login(request):
 
 def Startup_SetSession(request,startup):
         request.session['Startup_id'] = startup.id
-        request.session['Startup_Name'] = startup.Name 
         return redirect("/Startup/")
 
 
